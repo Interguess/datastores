@@ -1,22 +1,34 @@
 package de.igweb.igdatastores;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@AllArgsConstructor
-public abstract class DataStore {
+public class DataStore<D> {
 
-    private Class<? extends Entity> entityClass;
+    private final List<D> data = new ArrayList<>();
 
-    public Query createQuery() {
-        return new Query(this);
+    public Query<D> createQuery() {
+        return new Query<>(this);
     }
 
-    public abstract List<? extends Entity> get(Query query);
+    public void save(D object) {
+        data.add(object);
+        onDataStored(object);
+    }
 
-    public abstract void save(Entity object);
+    public List<D> get(Query<D> query) {
+        List<D> result = new ArrayList<>();
+        for (D object : data) {
+            if (query.allConditionsTrue(object)) {
+                result.add(object);
+            }
+        }
+        onDataRetrieved(query, result);
+        return result;
+    }
+
+    public native void onDataStored(D data);
+
+    public native void onDataRetrieved(Query<D> query, List<D> data);
 
 }
