@@ -13,7 +13,7 @@
     <dependency>
         <groupId>com.github.IgWebDE</groupId>
         <artifactId>IgDataStores</artifactId>
-        <version>f6dadc6</version>
+        <version>LATEST</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
