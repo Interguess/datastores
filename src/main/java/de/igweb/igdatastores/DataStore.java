@@ -13,7 +13,10 @@ public class DataStore<D> {
 
     public void save(D object) {
         data.add(object);
-        onDataStored(object);
+        try {
+            //onDataStored(object);
+        } catch (Exception ignored) {
+        }
     }
 
     public List<D> get(Query<D> query) {
@@ -23,12 +26,15 @@ public class DataStore<D> {
                 result.add(object);
             }
         }
-        onDataRetrieved(query, result);
+        try {
+            //onDataRetrieved(query, result);
+        } catch (Exception ignored) {
+        }
         return result;
     }
 
-    public native void onDataStored(D data);
-
-    public native void onDataRetrieved(Query<D> query, List<D> data);
+//    public native void onDataStored(D data);
+//
+//    public native void onDataRetrieved(Query<D> query, List<D> data);
 
 }
