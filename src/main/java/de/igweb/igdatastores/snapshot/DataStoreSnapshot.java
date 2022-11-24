@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import lombok.Builder;
 
 @Builder
-@SuppressWarnings("unused")
 public class DataStoreSnapshot {
 
     private static final Gson GSON = new Gson();

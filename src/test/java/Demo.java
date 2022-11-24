@@ -26,7 +26,11 @@ public class Demo {
         //userStorage.clearAll();
 
         String snapShot = userStorage.createSnapshot().toString();
-        userStorage.loadSnapshot(DataStoreSnapshot.fromString(snapShot));
+
+        DataStoreSnapshot snapshot = DataStoreSnapshot.fromString(snapShot);
+        System.out.println("Snapshot ID: " + snapshot.getId());
+        System.out.println("Snapshot Timestamp: " + snapshot.getTimestamp());
+        userStorage.loadSnapshot(snapshot);
 
         userStorage.createQuery()
                 .field("email").isNotNull()
