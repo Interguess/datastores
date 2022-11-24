@@ -7,18 +7,27 @@ public class DataStore<D> {
 
     private final List<D> data = new ArrayList<>();
 
+    /**
+     * Creates a new Query for this DataStore.
+     *
+     * @return The new Query.
+     */
     public Query<D> createQuery() {
         return new Query<>(this);
     }
 
+    /**
+     * Saves the given object to the DataStore.
+     *
+     * @param object The object to save.
+     */
     public void save(D object) {
         data.add(object);
-        try {
-            //onDataStored(object);
-        } catch (Exception ignored) {
-        }
     }
 
+    /**
+     * @return A list of all objects in the DataStore that match the given query.
+     */
     public List<D> get(Query<D> query) {
         List<D> result = new ArrayList<>();
         for (D object : data) {
@@ -26,15 +35,7 @@ public class DataStore<D> {
                 result.add(object);
             }
         }
-        try {
-            //onDataRetrieved(query, result);
-        } catch (Exception ignored) {
-        }
         return result;
     }
-
-//    public native void onDataStored(D data);
-//
-//    public native void onDataRetrieved(Query<D> query, List<D> data);
 
 }

@@ -2,6 +2,14 @@ package de.igweb.igdatastores;
 
 public class ConditionalChecker {
 
+    /**
+     * Checks whether the given value matches the given condition.
+     *
+     * @param objectA             The first value.
+     * @param objectB             The second value.
+     * @param conditionIdentifier The condition to check.
+     * @return Whether the given value matches the given condition.
+     */
     public static boolean isTrue(Object objectA, Object objectB, String conditionIdentifier) {
         switch (conditionIdentifier) {
             case "=" -> {
