@@ -1,4 +1,5 @@
 import de.igweb.igdatastores.DataStore;
+import de.igweb.igdatastores.snapshot.DataStoreSnapshot;
 
 public class Demo {
 
@@ -12,6 +13,26 @@ public class Demo {
         userStorage.createQuery()
                 .field("email").isNotNull()
                 .get().forEach(user -> System.out.println(user.getName()));
+
+        if (!userStorage.createQuery().field("age").lessThan(18).containsAny()) {
+            System.out.println("There are no users under 18!");
+        }
+
+        userStorage.createQuery()
+                .field("age").lessThan(18).clear();
+
+        System.out.println(userStorage.createSnapshot());
+
+        //userStorage.clearAll();
+
+        String snapShot = userStorage.createSnapshot().toString();
+        userStorage.loadSnapshot(DataStoreSnapshot.fromString(snapShot));
+
+        userStorage.createQuery()
+                .field("email").isNotNull()
+                .get().forEach(user -> System.out.println(user.getName()));
+
+        userStorage.clearAll();
     }
 
 }

@@ -9,7 +9,7 @@ public class Query<T> {
 
     private final DataStore<T> dataStore;
 
-    private final List<Field> requiredFields = new ArrayList<>();
+    private final List<Field> requiredFields;
 
     /**
      * Creates a new Query for the given DataStore.
@@ -18,6 +18,7 @@ public class Query<T> {
      */
     public Query(DataStore<T> dataStore) {
         this.dataStore = dataStore;
+        this.requiredFields = new ArrayList<>();
     }
 
     /**
@@ -43,8 +44,8 @@ public class Query<T> {
                     return false;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception exception) {
+            throw new RuntimeException("Failed to check conditions for " + object.getClass() + "!", exception);
         }
         return true;
     }
@@ -54,6 +55,20 @@ public class Query<T> {
      */
     public List<T> get() {
         return dataStore.get(this);
+    }
+
+    /**
+     * Clears all objects from the DataStore that match with this Query.
+     */
+    public void clear() {
+        dataStore.clear(this);
+    }
+
+    /**
+     * @return whether the DataStore contains at least one object that matches with this Query.
+     */
+    public boolean containsAny() {
+        return dataStore.containsAny(this);
     }
 
     @Getter
@@ -86,7 +101,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> equal(Object requiredValue) {
-            return pack("=", requiredValue);
+            return addCondition("=", requiredValue);
         }
 
         /**
@@ -96,7 +111,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> equalIgnoreCase(Object requiredValue) {
-            return pack("=?^", requiredValue);
+            return addCondition("=?^", requiredValue);
         }
 
         /**
@@ -106,7 +121,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> notEqual(Object requiredValue) {
-            return pack("!=", requiredValue);
+            return addCondition("!=", requiredValue);
         }
 
         /**
@@ -116,7 +131,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> greaterThan(Object requiredValue) {
-            return pack(">", requiredValue);
+            return addCondition(">", requiredValue);
         }
 
         /**
@@ -126,7 +141,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> lessThan(Object requiredValue) {
-            return pack("<", requiredValue);
+            return addCondition("<", requiredValue);
         }
 
         /**
@@ -136,7 +151,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> contains(Object requiredValue) {
-            return pack("contains", requiredValue);
+            return addCondition("contains", requiredValue);
         }
 
         /**
@@ -146,7 +161,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> containsIgnoreCase(Object requiredValue) {
-            return pack("containsIgnoreCase", requiredValue);
+            return addCondition("containsIgnoreCase", requiredValue);
         }
 
         /**
@@ -156,7 +171,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> startsWith(Object requiredValue) {
-            return pack("startsWith", requiredValue);
+            return addCondition("startsWith", requiredValue);
         }
 
         /**
@@ -166,7 +181,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> startsWithIgnoreCase(Object requiredValue) {
-            return pack("startsWithIgnoreCase", requiredValue);
+            return addCondition("startsWithIgnoreCase", requiredValue);
         }
 
         /**
@@ -176,7 +191,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> endsWith(Object requiredValue) {
-            return pack("endsWith", requiredValue);
+            return addCondition("endsWith", requiredValue);
         }
 
         /**
@@ -186,7 +201,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> endsWithIgnoreCase(Object requiredValue) {
-            return pack("endsWithIgnoreCase", requiredValue);
+            return addCondition("endsWithIgnoreCase", requiredValue);
         }
 
         /**
@@ -195,7 +210,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> isNull() {
-            return pack("?null", true);
+            return addCondition("?null", true);
         }
 
         /**
@@ -204,7 +219,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> isNotNull() {
-            return pack("?null", false);
+            return addCondition("?null", false);
         }
 
         /**
@@ -213,7 +228,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> isTrue() {
-            return pack("?bool_val", true);
+            return addCondition("?bool_val", true);
         }
 
         /**
@@ -222,7 +237,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> isFalse() {
-            return pack("?bool_val", false);
+            return addCondition("?bool_val", false);
         }
 
         /**
@@ -230,11 +245,11 @@ public class Query<T> {
          *
          * @return The Query.
          */
-        public Query<T> pack(String condition, Object requiredValue) {
+        public Query<T> addCondition(String condition, Object requiredValue) {
             this.condition = condition;
             this.requiredValue = requiredValue;
             requiredFields.add(this);
-            return this.query;
+            return query;
         }
 
     }
