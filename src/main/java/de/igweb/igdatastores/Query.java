@@ -60,7 +60,7 @@ public class Query<T> {
     @SuppressWarnings("unused")
     public class Field {
 
-        private final Query<?> query;
+        private final Query<T> query;
 
         private final String name;
 
@@ -74,7 +74,7 @@ public class Query<T> {
          * @param query The Query to create the Field for.
          * @param name  The name of the Field.
          */
-        public Field(Query<?> query, String name) {
+        public Field(Query<T> query, String name) {
             this.query = query;
             this.name = name;
         }
@@ -85,7 +85,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> equal(Object requiredValue) {
+        public Query<T> equal(Object requiredValue) {
             this.condition = "=";
             this.requiredValue = requiredValue;
             return pack();
@@ -97,7 +97,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> equalIgnoreCase(Object requiredValue) {
+        public Query<T> equalIgnoreCase(Object requiredValue) {
             this.condition = "=?^";
             this.requiredValue = requiredValue;
             return pack();
@@ -109,7 +109,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> notEqual(Object requiredValue) {
+        public Query<T> notEqual(Object requiredValue) {
             this.condition = "!=";
             this.requiredValue = requiredValue;
             return pack();
@@ -121,7 +121,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> greaterThan(Object requiredValue) {
+        public Query<T> greaterThan(Object requiredValue) {
             this.condition = ">";
             this.requiredValue = requiredValue;
             return pack();
@@ -133,7 +133,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> lessThan(Object requiredValue) {
+        public Query<T> lessThan(Object requiredValue) {
             this.condition = "<";
             this.requiredValue = requiredValue;
             return pack();
@@ -145,7 +145,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> contains(Object requiredValue) {
+        public Query<T> contains(Object requiredValue) {
             this.condition = "contains";
             this.requiredValue = requiredValue;
             return pack();
@@ -157,7 +157,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> containsIgnoreCase(Object requiredValue) {
+        public Query<T> containsIgnoreCase(Object requiredValue) {
             this.condition = "containsIgnoreCase";
             this.requiredValue = requiredValue;
             return pack();
@@ -169,7 +169,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> startsWith(Object requiredValue) {
+        public Query<T> startsWith(Object requiredValue) {
             this.condition = "startsWith";
             this.requiredValue = requiredValue;
             return pack();
@@ -181,7 +181,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> startsWithIgnoreCase(Object requiredValue) {
+        public Query<T> startsWithIgnoreCase(Object requiredValue) {
             this.condition = "startsWithIgnoreCase";
             this.requiredValue = requiredValue;
             return pack();
@@ -193,7 +193,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> endsWith(Object requiredValue) {
+        public Query<T> endsWith(Object requiredValue) {
             this.condition = "endsWith";
             this.requiredValue = requiredValue;
             return pack();
@@ -205,7 +205,7 @@ public class Query<T> {
          * @param requiredValue The required value.
          * @return The Query.
          */
-        public Query<?> endsWithIgnoreCase(Object requiredValue) {
+        public Query<T> endsWithIgnoreCase(Object requiredValue) {
             this.condition = "endsWithIgnoreCase";
             this.requiredValue = requiredValue;
             return pack();
@@ -216,7 +216,7 @@ public class Query<T> {
          *
          * @return The Query.
          */
-        public Query<?> isNull() {
+        public Query<T> isNull() {
             this.condition = "?null";
             this.requiredValue = null;
             return pack();
@@ -227,7 +227,7 @@ public class Query<T> {
          *
          * @return The Query.
          */
-        public Query<?> isNotNull() {
+        public Query<T> isNotNull() {
             this.condition = "?!null";
             this.requiredValue = null;
             return pack();
@@ -238,7 +238,7 @@ public class Query<T> {
          *
          * @return The Query.
          */
-        public Query<?> isTrue() {
+        public Query<T> isTrue() {
             this.condition = "?true";
             this.requiredValue = null;
             return pack();
@@ -249,7 +249,7 @@ public class Query<T> {
          *
          * @return The Query.
          */
-        public Query<?> isFalse() {
+        public Query<T> isFalse() {
             this.condition = "?false";
             this.requiredValue = null;
             return pack();
@@ -260,7 +260,7 @@ public class Query<T> {
          *
          * @return The Query.
          */
-        public Query<?> pack() {
+        public Query<T> pack() {
             requiredFields.add(this);
             return this.query;
         }
