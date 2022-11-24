@@ -46,16 +46,10 @@ public class ConditionalChecker {
                 return objectA.toString().toLowerCase().endsWith(objectB.toString().toLowerCase());
             }
             case "?null" -> {
-                return objectA == null;
+                return (objectA == null) == ((boolean) objectB);
             }
-            case "?!null" -> {
-                return objectA != null;
-            }
-            case "?true" -> {
-                return (boolean) objectA;
-            }
-            case "?false" -> {
-                return !(boolean) objectA;
+            case "?bool_val" -> {
+                return (boolean) objectA == (boolean) objectB;
             }
             default -> {
                 return false;

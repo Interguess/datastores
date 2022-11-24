@@ -86,9 +86,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> equal(Object requiredValue) {
-            this.condition = "=";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("=", requiredValue);
         }
 
         /**
@@ -98,9 +96,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> equalIgnoreCase(Object requiredValue) {
-            this.condition = "=?^";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("=?^", requiredValue);
         }
 
         /**
@@ -110,9 +106,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> notEqual(Object requiredValue) {
-            this.condition = "!=";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("!=", requiredValue);
         }
 
         /**
@@ -122,9 +116,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> greaterThan(Object requiredValue) {
-            this.condition = ">";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack(">", requiredValue);
         }
 
         /**
@@ -134,9 +126,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> lessThan(Object requiredValue) {
-            this.condition = "<";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("<", requiredValue);
         }
 
         /**
@@ -146,9 +136,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> contains(Object requiredValue) {
-            this.condition = "contains";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("contains", requiredValue);
         }
 
         /**
@@ -158,9 +146,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> containsIgnoreCase(Object requiredValue) {
-            this.condition = "containsIgnoreCase";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("containsIgnoreCase", requiredValue);
         }
 
         /**
@@ -170,9 +156,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> startsWith(Object requiredValue) {
-            this.condition = "startsWith";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("startsWith", requiredValue);
         }
 
         /**
@@ -182,9 +166,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> startsWithIgnoreCase(Object requiredValue) {
-            this.condition = "startsWithIgnoreCase";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("startsWithIgnoreCase", requiredValue);
         }
 
         /**
@@ -194,9 +176,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> endsWith(Object requiredValue) {
-            this.condition = "endsWith";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("endsWith", requiredValue);
         }
 
         /**
@@ -206,9 +186,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> endsWithIgnoreCase(Object requiredValue) {
-            this.condition = "endsWithIgnoreCase";
-            this.requiredValue = requiredValue;
-            return pack();
+            return pack("endsWithIgnoreCase", requiredValue);
         }
 
         /**
@@ -217,9 +195,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> isNull() {
-            this.condition = "?null";
-            this.requiredValue = null;
-            return pack();
+            return pack("?null", true);
         }
 
         /**
@@ -228,9 +204,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> isNotNull() {
-            this.condition = "?!null";
-            this.requiredValue = null;
-            return pack();
+            return pack("?null", false);
         }
 
         /**
@@ -239,9 +213,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> isTrue() {
-            this.condition = "?true";
-            this.requiredValue = null;
-            return pack();
+            return pack("?bool_val", true);
         }
 
         /**
@@ -250,9 +222,7 @@ public class Query<T> {
          * @return The Query.
          */
         public Query<T> isFalse() {
-            this.condition = "?false";
-            this.requiredValue = null;
-            return pack();
+            return pack("?bool_val", false);
         }
 
         /**
@@ -260,7 +230,9 @@ public class Query<T> {
          *
          * @return The Query.
          */
-        public Query<T> pack() {
+        public Query<T> pack(String condition, Object requiredValue) {
+            this.condition = condition;
+            this.requiredValue = requiredValue;
             requiredFields.add(this);
             return this.query;
         }
