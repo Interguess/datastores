@@ -61,7 +61,8 @@ public class DataStore<D> {
      * @return whether the DataStore contains at least one object that matches with the given Query.
      */
     public boolean containsAny(Query<D> query) {
-        return get(query).size() > 0;
+        if (get(query) == null) return false;
+        return !get(query).isEmpty();
     }
 
     /**
