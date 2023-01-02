@@ -24,9 +24,9 @@ public class DataStore<D> {
     }
 
     /**
-     * Saves all given objects to the DataStore.
+     * Saves the given objects to the DataStore.
      *
-     * @param object The objects to save.
+     * @param objects The objects to save.
      */
     @SafeVarargs
     public final void save(D... objects) {

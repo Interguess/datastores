@@ -1,8 +1,6 @@
 import de.igweb.igdatastores.DataStore;
-import de.igweb.igdatastores.collector.UpdatedDataCollector;
 
 public class Demo {
-
 
     public static void main(String[] args) {
         DataStore<User> userStore = new DataStore<>();
@@ -17,8 +15,6 @@ public class Demo {
         userStore.createQuery()
                 .field("age").greaterThan(3)
                 .get().forEach(user -> System.out.println(user.getFirstName()));
-
-
     }
 
 }

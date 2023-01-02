@@ -4,7 +4,6 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Query<T> {
 
@@ -37,22 +36,18 @@ public class Query<T> {
      * @return Whether all conditions of the Query are true for the given object.
      */
     public boolean allConditionsTrue(Object object) {
-        AtomicBoolean allConditionsTrue = new AtomicBoolean(true);
-        requiredFields.forEach(field -> {
-            if (check(object, field)) return;
-            allConditionsTrue.set(false);
-        });
-        return allConditionsTrue.get();
-    }
-
-    private boolean check(Object object, Field field) {
         try {
-            java.lang.reflect.Field memoryField = object.getClass().getDeclaredField(field.getName());
-            memoryField.setAccessible(true);
-            return ConditionalChecker.isTrue(memoryField.get(object), field.getRequiredValue(), field.getCondition());
+            for (Field field : requiredFields) {
+                java.lang.reflect.Field memoryField = object.getClass().getDeclaredField(field.getName());
+                memoryField.setAccessible(true);
+                if (!ConditionalChecker.isTrue(memoryField.get(object), field.getRequiredValue(), field.getCondition())) {
+                    return false;
+                }
+            }
         } catch (Exception exception) {
             throw new RuntimeException("Failed to check conditions for " + object.getClass() + "!", exception);
         }
+        return true;
     }
 
     /**

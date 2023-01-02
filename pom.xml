@@ -7,21 +7,6 @@
     <groupId>org.example</groupId>
     <artifactId>IgDataStores</artifactId>
     <version>1.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -34,12 +19,12 @@
             <artifactId>gson</artifactId>
             <version>2.10</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.IgWebDE</groupId>
-            <artifactId>IgTaskChains</artifactId>
-            <version>4ad4c26</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 </project>
