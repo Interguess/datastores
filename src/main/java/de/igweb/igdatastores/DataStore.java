@@ -24,12 +24,13 @@ public class DataStore<D> {
     }
 
     /**
-     * Saves the given object to the DataStore.
+     * Saves all given objects to the DataStore.
      *
-     * @param object The object to save.
+     * @param object The objects to save.
      */
-    public void save(D object) {
-        data.add(object);
+    @SafeVarargs
+    public final void save(D... objects) {
+        data.addAll(List.of(objects));
     }
 
     /**
