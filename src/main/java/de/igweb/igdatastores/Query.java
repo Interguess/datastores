@@ -1,5 +1,6 @@
 package de.igweb.igdatastores;
 
+import de.igweb.igdatastores.exception.DataStoreException;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -39,22 +40,35 @@ public class Query<T> {
         try {
             for (Field field : requiredFields) {
                 java.lang.reflect.Field memoryField = object.getClass().getDeclaredField(field.getName());
-                memoryField.setAccessible(true);
+                if (!memoryField.trySetAccessible()) {
+                    throw new DataStoreException("Failed to access field " + field.getName() + " of object " + object);
+                }
                 if (!ConditionalChecker.isTrue(memoryField.get(object), field.getRequiredValue(), field.getCondition())) {
                     return false;
                 }
             }
         } catch (Exception exception) {
-            throw new RuntimeException("Failed to check conditions for " + object.getClass() + "!", exception);
+            throw new DataStoreException("Failed to check conditions for object " + object, exception);
         }
         return true;
     }
 
     /**
+     * Gets all objects in the DataStore that match with this Query.
+     *
      * @return A list of all objects in the DataStore that match with this Query.
      */
-    public List<T> get() {
-        return dataStore.get(this);
+    public List<T> list() {
+        return dataStore.list(this);
+    }
+
+    /**
+     * Gets the first object in the DataStore that matches with this Query.
+     *
+     * @return The first object in the DataStore that matches with this Query.
+     */
+    public T get() {
+        return list().get(0);
     }
 
     /**

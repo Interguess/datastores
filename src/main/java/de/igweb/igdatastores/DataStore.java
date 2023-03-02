@@ -41,11 +41,23 @@ public class DataStore<D> {
     }
 
     /**
-     * @param query The Query to check.
-     * @return A list of all objects in the DataStore that match the given query.
+     * Gets a list of all objects in the DataStore matching with the given Query.
+     *
+     * @param query The Query with the conditions.
+     * @return A list of all objects in the DataStore matching with the given Query.
      */
-    public List<D> get(Query<D> query) {
+    public List<D> list(Query<D> query) {
         return data.stream().filter(query::allConditionsTrue).toList();
+    }
+
+    /**
+     * Gets the first object in the DataStore that matches with the given Query.
+     *
+     * @param query The Query with the conditions.
+     * @return The first object in the DataStore that matches with the given Query.
+     */
+    public D get(Query<D> query) {
+        return list(query).get(0);
     }
 
     /**
@@ -54,7 +66,7 @@ public class DataStore<D> {
      * @param query The Query with the conditions.
      */
     public void clear(Query<D> query) {
-        get(query).forEach(data::remove);
+        list(query).forEach(data::remove);
     }
 
     /**
@@ -62,8 +74,7 @@ public class DataStore<D> {
      * @return whether the DataStore contains at least one object that matches with the given Query.
      */
     public boolean containsAny(Query<D> query) {
-        if (get(query) == null) return false;
-        return !get(query).isEmpty();
+        return !list(query).isEmpty();
     }
 
     /**
@@ -72,16 +83,12 @@ public class DataStore<D> {
      * @return A snapshot of the DataStore.
      */
     public DataStoreSnapshot createSnapshot() {
-        try {
-            return DataStoreSnapshot.builder()
-                    .id(System.currentTimeMillis() * this.hashCode())
-                    .timestamp(System.currentTimeMillis())
-                    .dataClassName(data.get(0).getClass().getName())
-                    .data(GSON.toJson(data))
-                    .build();
-        } catch (Exception exception) {
-            throw new RuntimeException("Failed to create snapshot!", exception);
-        }
+        return DataStoreSnapshot.builder()
+                .id(System.currentTimeMillis() * this.hashCode())
+                .timestamp(System.currentTimeMillis())
+                .dataClassName(data.get(0).getClass().getName())
+                .data(GSON.toJson(data))
+                .build();
     }
 
     /**
@@ -90,19 +97,15 @@ public class DataStore<D> {
      * @param snapshot The snapshot to restore from.
      */
     public void loadSnapshot(DataStoreSnapshot snapshot) {
-        try {
-            JsonArray jsonArray = new JsonArray();
-            jsonArray.addAll(GSON.fromJson(snapshot.getData(), JsonArray.class));
-            jsonArray.asList().forEach(element -> {
-                try {
-                    data.add(GSON.fromJson(element, (Type) Class.forName(snapshot.getDataClassName())));
-                } catch (Exception exception) {
-                    throw new RuntimeException("Failed to load snapshot!", exception);
-                }
-            });
-        } catch (Exception exception) {
-            throw new RuntimeException("Failed to load snapshot!", exception);
-        }
+        JsonArray jsonArray = new JsonArray();
+        jsonArray.addAll(GSON.fromJson(snapshot.getData(), JsonArray.class));
+        jsonArray.asList().forEach(element -> {
+            try {
+                data.add(GSON.fromJson(element, (Type) Class.forName(snapshot.getDataClassName())));
+            } catch (ClassNotFoundException exception) {
+                exception.printStackTrace();
+            }
+        });
     }
 
 }
