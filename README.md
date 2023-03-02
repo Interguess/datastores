@@ -35,7 +35,7 @@ public class Demo {
                 .field("age").greaterThan(20)
                 .field("age").lessThan(24)
                 .field("email").endsWith("es.i")
-                .get().forEach(user -> System.out.println(user.getName()));
+                .list().forEach(user -> System.out.println(user.getName()));
     }
 
 }
