@@ -61,6 +61,15 @@ public class DataStore<D> {
     }
 
     /**
+     * Gets all objects in the DataStore.
+     *
+     * @return A list of all objects in the DataStore.
+     */
+    public List<D> list() {
+        return data;
+    }
+
+    /**
      * Clears all objects from the DataStore that match with the given Query.
      *
      * @param query The Query with the conditions.
