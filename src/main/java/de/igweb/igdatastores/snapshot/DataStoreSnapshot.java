@@ -58,5 +58,4 @@ public class DataStoreSnapshot {
     public static DataStoreSnapshot fromString(String json) {
         return GSON.fromJson(json, DataStoreSnapshot.class);
     }
-
 }
