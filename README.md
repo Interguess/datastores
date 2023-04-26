@@ -1,22 +1,33 @@
 # IgDataStores
 
+## Use with Gradle
+```gradle
+repositories {
+  maven { url 'https://jitpack.io' }
+}
+```
+
+```gradle
+dependencies {
+  implementation 'com.github.IgWebDE:IgDataStores:latest'
+}
+```
+
+
+## Use with Maven
 ```xml
+<repository>
+  <id>jitpack.io</id>
+  <url>https://jitpack.io</url>
+</repository>
+```
 
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-
-<dependencies>
-    <dependency>
-        <groupId>com.github.IgWebDE</groupId>
-        <artifactId>IgDataStores</artifactId>
-        <version>LATEST</version>
-        <scope>compile</scope>
-    </dependency>
-</dependencies>
+```xml
+<dependency>
+  <groupId>com.github.IgWebDE</groupId>
+  <artifactId>IgDataStores</artifactId>
+  <version>latest</version>
+</dependency>
 ```
 
 ```java

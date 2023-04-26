@@ -265,7 +265,5 @@ public class Query<T> {
             requiredFields.add(this);
             return query;
         }
-
     }
-
 }
