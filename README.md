@@ -21,7 +21,7 @@ dependencies {
   <url>https://jitpack.io</url>
 </repository>
 ```
-  
+
 ```xml
 <dependency>
   <groupId>com.github.IgWebDE</groupId>
