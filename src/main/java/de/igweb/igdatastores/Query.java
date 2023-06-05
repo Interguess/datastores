@@ -1,6 +1,5 @@
 package de.igweb.igdatastores;
 
-import de.igweb.igdatastores.exception.DataStoreException;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -10,7 +9,8 @@ public class Query<T> {
 
     private final DataStore<T> dataStore;
 
-    private final List<Field> requiredFields;
+    @Getter
+    private final List<Field> requirements;
 
     /**
      * Creates a new Query for the given DataStore.
@@ -19,7 +19,7 @@ public class Query<T> {
      */
     public Query(DataStore<T> dataStore) {
         this.dataStore = dataStore;
-        this.requiredFields = new ArrayList<>();
+        this.requirements = new ArrayList<>();
     }
 
     /**
@@ -30,27 +30,6 @@ public class Query<T> {
      */
     public Field field(String name) {
         return new Field(this, name);
-    }
-
-    /**
-     * @param object The object to check.
-     * @return Whether all conditions of the Query are true for the given object.
-     */
-    public boolean allConditionsTrue(Object object) {
-        try {
-            for (Field field : requiredFields) {
-                java.lang.reflect.Field memoryField = object.getClass().getDeclaredField(field.getName());
-                if (!memoryField.trySetAccessible()) {
-                    throw new DataStoreException("Failed to access field " + field.getName() + " of object " + object);
-                }
-                if (!ConditionalChecker.isTrue(memoryField.get(object), field.getRequiredValue(), field.getCondition())) {
-                    return false;
-                }
-            }
-        } catch (Exception exception) {
-            throw new DataStoreException("Failed to check conditions for object " + object, exception);
-        }
-        return true;
     }
 
     /**
@@ -262,7 +241,7 @@ public class Query<T> {
         public Query<T> addCondition(String condition, Object requiredValue) {
             this.condition = condition;
             this.requiredValue = requiredValue;
-            requiredFields.add(this);
+            requirements.add(this);
             return query;
         }
     }

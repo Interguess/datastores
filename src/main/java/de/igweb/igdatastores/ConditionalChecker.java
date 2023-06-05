@@ -1,5 +1,7 @@
 package de.igweb.igdatastores;
 
+import java.util.List;
+
 public class ConditionalChecker {
 
     /**
@@ -28,5 +30,26 @@ public class ConditionalChecker {
             case "?bool_val" -> (boolean) objectA == (boolean) objectB;
             default -> false;
         };
+    }
+
+    /**
+     * @param object The object to check.
+     * @return Whether all conditions of the Query are true for the given object.
+     */
+    public static <D> boolean checkAll(List<Query<D>.Field> requirements, D object) {
+        try {
+            for (Query<?>.Field field : requirements) {
+                java.lang.reflect.Field memoryField = object.getClass().getDeclaredField(field.getName());
+                if (!memoryField.trySetAccessible()) {
+                    throw new RuntimeException("Failed to set field accessible");
+                }
+                if (!ConditionalChecker.isTrue(memoryField.get(object), field.getRequiredValue(), field.getCondition())) {
+                    return false;
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return true;
     }
 }

@@ -1,6 +1,9 @@
-import de.igweb.igdatastores.DataStore;
+package de.igweb.igdatastores.test;
 
-public class Demo {
+import de.igweb.igdatastores.DataStore;
+import de.igweb.igdatastores.test.model.User;
+
+public class DataStoresTest {
 
     public static void main(String[] args) {
         DataStore<User> userStorage = new DataStore<>();
@@ -17,5 +20,4 @@ public class Demo {
                 .field("email").endsWith("es.i")
                 .list().forEach(user -> System.out.println(user.getName()));
     }
-
 }
