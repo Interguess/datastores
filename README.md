@@ -34,6 +34,7 @@ dependencies {
 
 ```java
 import de.igweb.igdatastores.DataStore;
+import de.igweb.igdatastores.test.model.User;
 
 public class DataStoresTest {
 
