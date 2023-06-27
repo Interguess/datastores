@@ -3,7 +3,9 @@
 ## Use with Gradle
 ```gradle
 repositories {
-  maven { url 'https://jitpack.io' }
+  maven {
+    url 'https://jitpack.io'
+  }
 }
 ```
 
@@ -33,15 +35,15 @@ dependencies {
 ```java
 import de.igweb.igdatastores.DataStore;
 
-public class de.igweb.igdatastores.test.DataStoresTest {
+public class DataStoresTest {
 
     public static void main(String[] args) {
         DataStore<de.igweb.igdatastores.test.model.User> userStorage = new DataStore<>();
         userStorage.save(
-                new de.igweb.igdatastores.test.model.User("John", 19, "john@datastores.i"),
-                new de.igweb.igdatastores.test.model.User("Jane", 29, "jane@datastores.i"),
-                new de.igweb.igdatastores.test.model.User("Jack", 46, "jack@datastores.i"),
-                new de.igweb.igdatastores.test.model.User("Jill", 23, "jill@datastores.i")
+                new User("John", 19, "john@datastores.i"),
+                new User("Jane", 29, "jane@datastores.i"),
+                new User("Jack", 46, "jack@datastores.i"),
+                new User("Jill", 23, "jill@datastores.i")
         );
 
         userStorage.createQuery()
