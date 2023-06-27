@@ -11,7 +11,7 @@ repositories {
 
 ```gradle
 dependencies {
-  implementation 'com.github.IgWebDE:IgDataStores:latest'
+  implementation 'com.github.InterGuess:IgDataStores:latest'
 }
 ```
 
@@ -26,7 +26,7 @@ dependencies {
 
 ```xml
 <dependency>
-  <groupId>com.github.IgWebDE</groupId>
+  <groupId>com.github.InterGuess</groupId>
   <artifactId>IgDataStores</artifactId>
   <version>latest</version>
 </dependency>
