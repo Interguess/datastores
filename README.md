@@ -38,7 +38,7 @@ import de.igweb.igdatastores.DataStore;
 public class DataStoresTest {
 
     public static void main(String[] args) {
-        DataStore<de.igweb.igdatastores.test.model.User> userStorage = new DataStore<>();
+        DataStore<User> userStorage = new DataStore<>();
         userStorage.save(
                 new User("John", 19, "john@datastores.i"),
                 new User("Jane", 29, "jane@datastores.i"),
