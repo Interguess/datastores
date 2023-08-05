@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group = 'de.interguess'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+    compileOnly 'org.jetbrains:annotations:24.0.0'
+}
