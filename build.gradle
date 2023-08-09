@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.jetbrains:annotations:24.0.1'
     testCompileOnly 'org.projectlombok:lombok:1.18.28'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
-    compileOnly 'org.jetbrains:annotations:24.0.1'
 }
