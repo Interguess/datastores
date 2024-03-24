@@ -9,7 +9,6 @@ import java.util.List;
 public class DatastoreTest {
 
     public static void main(String[] args) {
-
         //Create a new datastore for the type User
         Datastore<User> datastore = new DatastoreImpl<>();
 
