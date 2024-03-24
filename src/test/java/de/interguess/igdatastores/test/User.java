@@ -12,5 +12,4 @@ public class User {
     private final String lastName;
 
     private final int age;
-
 }
